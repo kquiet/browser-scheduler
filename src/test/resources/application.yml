@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: job-scheduler
+  jmx:
+    enabled: false
+    unique-names: true
+   
+management:
+  endpoints:
+    enabled-by-default: false
+
+job-scheduler:
+  instanceName: JobSchedulerTest
+  jobParallelism: 2

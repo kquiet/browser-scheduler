@@ -1,17 +1,15 @@
 /*
  * Copyright 2019 P. Kimberly Chang
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 
 package org.kquiet.jobscheduler.util;
@@ -25,35 +23,35 @@ import java.time.format.DateTimeFormatter;
 
 /**
  * Time utility class.
- * 
+ *
  * @author Kimberly
  */
 public final class TimeUtility {
-  private TimeUtility(){}
+  private TimeUtility() {}
 
   /**
    * Format {@code LocalDteTime.now()} as a string.
-   * 
+   *
    * @param format the format to be used in formating
    * @return formatted result string
    */
   public static String nowStr(String format) {
     return LocalDateTime.now().format(DateTimeFormatter.ofPattern(format));
   }
-  
+
   /**
    * Format {@code LocalDateTime.now(ZoneOffset.UTC)} as a string.
-   * 
+   *
    * @param format the format to be used in formating
    * @return formatted result string
    */
   public static String utcNowStr(String format) {
     return LocalDateTime.now(ZoneOffset.UTC).format(DateTimeFormatter.ofPattern(format));
   }
-  
+
   /**
    * Format given LocalDateTime as a string.
-   * 
+   *
    * @param dateTime the {@link LocalDateTime} to be formatted
    * @param format the format to be used in formating
    * @return formatted result string
@@ -64,10 +62,10 @@ public final class TimeUtility {
     }
     return dateTime.format(DateTimeFormatter.ofPattern(format));
   }
-  
+
   /**
    * Format given ZonedDateTime as a string.
-   * 
+   *
    * @param zonedDateTime the {@link ZonedDateTime} to be formatted
    * @param format the format to be used in formating
    * @return formatted result string
@@ -78,10 +76,10 @@ public final class TimeUtility {
     }
     return zonedDateTime.format(DateTimeFormatter.ofPattern(format));
   }
-  
+
   /**
    * Format given LocalDate as a string.
-   * 
+   *
    * @param date the {@link LocalDate} to be formatted
    * @param format the format to be used in formating
    * @return formatted result string
@@ -92,10 +90,10 @@ public final class TimeUtility {
     }
     return date.format(DateTimeFormatter.ofPattern(format));
   }
-  
+
   /**
    * Format given LocalTime as a string.
-   * 
+   *
    * @param time the {@link LocalTime} to be formatted
    * @param format the format to be used in formating
    * @return formatted result string
@@ -109,7 +107,7 @@ public final class TimeUtility {
 
   /**
    * Check whether specific LocalDateTime is in the period formed by two given LocalDateTime.
-   * 
+   *
    * @param start the start of period
    * @param end the end of period
    * @param dateTime the {@link LocalDateTime} to check
@@ -125,7 +123,7 @@ public final class TimeUtility {
 
   /**
    * Check whether specific LocalTime is in the period formed by two given LocalTime.
-   * 
+   *
    * @param start the start of period
    * @param end the end of period
    * @param time the {@link LocalTime} to check
@@ -143,17 +141,21 @@ public final class TimeUtility {
 
   /**
    * Calculate the date and time of next fire.
-   * 
+   *
    * @param start the start {@link LocalDateTime} of fireable period
-   * @param end  the end {@link LocalDateTime} of fireable period
+   * @param end the end {@link LocalDateTime} of fireable period
    * @param dailyStart the start {@link LocalTime} of daily fireable period
    * @param dailyEnd the end {@link LocalTime} of daily fireable period
    * @param from the {@link LocalDateTime} to calculate from
-   * @return the {@link LocalDateTime} of next fire 
+   * @return the {@link LocalDateTime} of next fire
    */
-  public static LocalDateTime calculateNextFireDateTime(LocalDateTime start, LocalDateTime end,
-      LocalTime dailyStart, LocalTime dailyEnd, LocalDateTime from) {
-    //impossible to fire
+  public static LocalDateTime calculateNextFireDateTime(
+      LocalDateTime start,
+      LocalDateTime end,
+      LocalTime dailyStart,
+      LocalTime dailyEnd,
+      LocalDateTime from) {
+    // impossible to fire
     if (start.isAfter(end) || from.isAfter(end)) {
       return null;
     }
@@ -166,7 +168,7 @@ public final class TimeUtility {
     LocalDateTime candidate = null;
 
     if (dailyStart.equals(dailyEnd)) {
-      //fire at any time in a day
+      // fire at any time in a day
       candidate = from;
     } else if (dailyStart.isAfter(dailyEnd)) {
       if (startTime.isBefore(dailyStart) && startTime.isAfter(dailyEnd)) {
@@ -184,7 +186,7 @@ public final class TimeUtility {
       }
     }
 
-    //no fire after end
+    // no fire after end
     if (candidate.isAfter(end)) {
       return null;
     } else {

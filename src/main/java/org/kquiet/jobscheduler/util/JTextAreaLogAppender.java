@@ -19,13 +19,12 @@ package org.kquiet.jobscheduler.util;
 import ch.qos.logback.classic.encoder.PatternLayoutEncoder;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.AppenderBase;
-
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 
 /**
  * A log appender used to display message on JTextArea.
- * 
+ *
  * @author Kimberly
  */
 public class JTextAreaLogAppender extends AppenderBase<ILoggingEvent> {
@@ -37,9 +36,10 @@ public class JTextAreaLogAppender extends AppenderBase<ILoggingEvent> {
     String logStr = this.encoder.getLayout().doLayout(event);
 
     if (this.textArea != null) {
-      SwingUtilities.invokeLater(() -> {
-        this.textArea.append(logStr);
-      });
+      SwingUtilities.invokeLater(
+          () -> {
+            this.textArea.append(logStr);
+          });
     }
   }
 
@@ -50,7 +50,7 @@ public class JTextAreaLogAppender extends AppenderBase<ILoggingEvent> {
   public void setEncoder(PatternLayoutEncoder encoder) {
     this.encoder = encoder;
   }
-  
+
   public void setTextArea(JTextArea textArea) {
     this.textArea = textArea;
   }

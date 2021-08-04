@@ -17,15 +17,17 @@
 package org.kquiet.jobscheduler.impl.common;
 
 import org.kquiet.jobscheduler.JobBase;
+import org.kquiet.jobscheduler.JobSchedulerConfig.JobConfig;
 
 /**
  * Restart internal browser of associated job controller.
- * 
+ *
  * @author Kimberly
  */
 public class RestartBrowser extends JobBase {
-  public RestartBrowser(String jobName) {
-    super(jobName);
+
+  public RestartBrowser(JobConfig config) {
+    super(config);
   }
 
   @Override

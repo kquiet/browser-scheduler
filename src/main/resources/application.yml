@@ -1,0 +1,59 @@
+spring:
+  application:
+    name: job-scheduler
+  jmx:
+    enabled: true
+    unique-names: true
+   
+management:
+  endpoints:
+    enabled-by-default: false
+    jmx:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      enabled: true
+      show-details: always
+    info:
+      enabled: true
+    env:
+      enabled: true
+    beans:
+      enabled: true
+    mappings:
+      enabled: true
+
+job-scheduler:
+  instanceName: JobSchedulerDefault
+  gui:
+    enable: true
+    clearLogInterval: 43200
+  browser:
+    type: firefox
+    maxTask: 1
+    pageLoadStrategy: none
+    headless: false
+  jobParallelism: 1
+  jobs:
+    - name: RestartBrowser1
+      enable: true
+      impl: org.kquiet.jobscheduler.impl.common.RestartBrowser
+      start: 2021-01-01T00:00:00
+      end: 2021-10-01T00:00:00
+      dailyStart: 03:00:00
+      dailyEnd: 03:00:01
+      interval: 43200
+      scheduleAfterExec: true
+      parameters:
+        abc: "def"
+    - name: RestartBrowser2
+      enable: false
+      impl: org.kquiet.jobscheduler.impl.common.RestartBrowser
+      dailyStart: 05:00:00
+      dailyEnd: 05:00:01
+      interval: 43200
+      scheduleAfterExec: true
+      parameters:
+        def: "ghi"
+

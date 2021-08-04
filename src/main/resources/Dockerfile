@@ -9,7 +9,7 @@ RUN apk update \
  && ln -s /usr/bin/chromedriver /opt/kquiet/${project.artifactId}/chromedriver \
  && rm -rf /usr/share/fonts/TTF/ \
  && apk add 'firefox-esr>60' \
- && wget https://github.com/mozilla/geckodriver/releases/download/v0.24.0/geckodriver-v0.24.0-linux64.tar.gz -O /opt/kquiet/${project.artifactId}/geckodriver.tar.gz \
+ && wget https://github.com/mozilla/geckodriver/releases/download/v0.29.1/geckodriver-v0.29.1-linux64.tar.gz -O /opt/kquiet/${project.artifactId}/geckodriver.tar.gz \
  && cd /opt/kquiet/${project.artifactId} && tar -zxvf geckodriver.tar.gz && rm geckodriver.tar.gz
 
 WORKDIR /opt/kquiet/${project.artifactId}
