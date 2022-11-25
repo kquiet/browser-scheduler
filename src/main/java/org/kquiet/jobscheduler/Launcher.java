@@ -28,11 +28,13 @@ import org.springframework.context.ApplicationContext;
 @SpringBootApplication
 public class Launcher implements CommandLineRunner {
 
-  @Autowired private JobSchedulerConfig jobSchedulerConfig;
-  @Autowired private ApplicationContext applicationContext;
+  @Autowired
+  private JobSchedulerConfig jobSchedulerConfig;
+  @Autowired
+  private ApplicationContext applicationContext;
 
   /**
-   * Start the application with/without gui by config.
+   * Start the application with/without gui according to config.
    *
    * @param args arguments
    */
@@ -43,9 +45,11 @@ public class Launcher implements CommandLineRunner {
   @Override
   public void run(String... args) throws Exception {
     if (jobSchedulerConfig.isGuiEnable()) {
+      System.setProperty("java.awt.headless", "false");
       MonitorFrame launchedObj = applicationContext.getBean(MonitorFrame.class);
       launchedObj.setVisible(true);
     } else {
+      System.setProperty("java.awt.headless", "true");
       JobController controller = applicationContext.getBean(JobController.class);
       controller.start();
     }

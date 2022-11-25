@@ -1,28 +1,27 @@
 spring:
   application:
     name: job-scheduler
-  jmx:
-    enabled: true
-    unique-names: true
-   
+  security:
+    user:
+      name: user
+server:
+  port: 26026
 management:
   endpoints:
-    enabled-by-default: false
-    jmx:
+    enabled-by-default: true
+    web:
+      base-path: '/actuator'
       exposure:
         include: '*'
   endpoint:
     health:
-      enabled: true
-      show-details: always
-    info:
-      enabled: true
+      show-details: when-authorized
     env:
-      enabled: true
-    beans:
-      enabled: true
-    mappings:
-      enabled: true
+      show-values: when-authorized
+    configprops:
+      show-values: when-authorized
+    shutdown:
+      enabled: false
 
 job-scheduler:
   instanceName: JobSchedulerDefault
@@ -36,24 +35,23 @@ job-scheduler:
     headless: false
   jobParallelism: 1
   jobs:
-    - name: RestartBrowser1
-      enable: true
-      impl: org.kquiet.jobscheduler.impl.common.RestartBrowser
-      start: 2021-01-01T00:00:00
-      end: 2021-10-01T00:00:00
-      dailyStart: 03:00:00
-      dailyEnd: 03:00:01
-      interval: 43200
-      scheduleAfterExec: true
-      parameters:
-        abc: "def"
-    - name: RestartBrowser2
-      enable: false
-      impl: org.kquiet.jobscheduler.impl.common.RestartBrowser
-      dailyStart: 05:00:00
-      dailyEnd: 05:00:01
-      interval: 43200
-      scheduleAfterExec: true
-      parameters:
-        def: "ghi"
-
+  - name: RestartBrowser1
+    enable: true
+    impl: org.kquiet.jobscheduler.impl.common.RestartBrowser
+    start: "2022-01-01T00:00:00"
+    end: "2022-12-31T00:00:00"
+    dailyStart: "23:00:00"
+    dailyEnd: "23:00:00"
+    interval: 43200
+    scheduleAfterExec: true
+    parameters:
+      abc: "def"
+  - name: RestartBrowser2
+    enable: false
+    impl: org.kquiet.jobscheduler.impl.common.RestartBrowser
+    dailyStart: "05:00:00"
+    dailyEnd: "05:00:01"
+    interval: 43200
+    scheduleAfterExec: true
+    parameters:
+      def: "ghi"
