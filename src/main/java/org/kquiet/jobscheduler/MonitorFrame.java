@@ -29,11 +29,13 @@ import javax.swing.SwingUtilities;
 import org.kquiet.concurrent.PausableScheduledThreadPoolExecutor;
 import org.kquiet.jobscheduler.JobController.InteractionType;
 import org.kquiet.jobscheduler.JobController.PauseTarget;
-import org.kquiet.jobscheduler.util.JTextAreaLogAppender;
+import org.kquiet.jobscheduler.util.JtextAreaLogAppender;
 import org.kquiet.jobscheduler.util.TimeUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
+import org.springframework.context.ApplicationContext;
 
 /** Optional gui to monitor jobs. */
 public class MonitorFrame extends javax.swing.JFrame {
@@ -41,8 +43,12 @@ public class MonitorFrame extends javax.swing.JFrame {
   private static final Logger LOGGER = LoggerFactory.getLogger(MonitorFrame.class);
 
   private final LocalDateTime initTime = LocalDateTime.now();
-  @Autowired private transient JobSchedulerConfig jobSchedulerConfig;
-  @Autowired private transient JobController controller;
+  @Autowired
+  private transient JobSchedulerConfig jobSchedulerConfig;
+  @Autowired
+  private transient JobController controller;
+  @Autowired
+  private transient ApplicationContext applicationContext;
   private transient PausableScheduledThreadPoolExecutor timerExecutor = null;
 
   public MonitorFrame() {
@@ -72,18 +78,17 @@ public class MonitorFrame extends javax.swing.JFrame {
     jmenuClear = new javax.swing.JMenu();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-    addWindowListener(
-        new java.awt.event.WindowAdapter() {
-          @Override
-          public void windowClosing(java.awt.event.WindowEvent evt) {
-            formWindowClosing(evt);
-          }
+    addWindowListener(new java.awt.event.WindowAdapter() {
+      @Override
+      public void windowClosing(java.awt.event.WindowEvent evt) {
+        formWindowClosing(evt);
+      }
 
-          @Override
-          public void windowOpened(java.awt.event.WindowEvent evt) {
-            formWindowOpened(evt);
-          }
-        });
+      @Override
+      public void windowOpened(java.awt.event.WindowEvent evt) {
+        formWindowOpened(evt);
+      }
+    });
 
     jtextAreaInfoLog.setColumns(20);
     jtextAreaInfoLog.setRows(5);
@@ -108,12 +113,11 @@ public class MonitorFrame extends javax.swing.JFrame {
 
     jbuttonPositive.setText("Positive");
     jbuttonPositive.setEnabled(false);
-    jbuttonPositive.addActionListener(
-        new java.awt.event.ActionListener() {
-          public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jbuttonSubmitActionPerformed(evt);
-          }
-        });
+    jbuttonPositive.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jbuttonSubmitActionPerformed(evt);
+      }
+    });
     java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.insets = new Insets(0, 0, 5, 0);
     gridBagConstraints.gridx = 0;
@@ -136,12 +140,11 @@ public class MonitorFrame extends javax.swing.JFrame {
 
     jbuttonCancel.setText("Negative");
     jbuttonCancel.setEnabled(false);
-    jbuttonCancel.addActionListener(
-        new java.awt.event.ActionListener() {
-          public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jbuttonCancelActionPerformed(evt);
-          }
-        });
+    jbuttonCancel.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jbuttonCancelActionPerformed(evt);
+      }
+    });
     gridBagConstraints = new java.awt.GridBagConstraints();
     gridBagConstraints.gridx = 0;
     gridBagConstraints.gridy = 2;
@@ -153,51 +156,47 @@ public class MonitorFrame extends javax.swing.JFrame {
     jtabbedPaneMain.addTab("Misc.", jscrollPaneMisc);
 
     jmenuPauseJobExecutor.setText("PauseJobExecutor");
-    jmenuPauseJobExecutor.addMouseListener(
-        new java.awt.event.MouseAdapter() {
-          @Override
-          public void mouseClicked(java.awt.event.MouseEvent evt) {
-            if (controller.isPaused(PauseTarget.JOB_EXECUTOR)) {
-              changePageStatus(PageStatus.JOB_EXECUTOR_RESUMED);
-            } else {
-              changePageStatus(PageStatus.JOB_EXECUTOR_PAUSED);
-            }
-          }
-        });
+    jmenuPauseJobExecutor.addMouseListener(new java.awt.event.MouseAdapter() {
+      @Override
+      public void mouseClicked(java.awt.event.MouseEvent evt) {
+        if (controller.isPaused(PauseTarget.JOB_EXECUTOR)) {
+          changePageStatus(PageStatus.JOB_EXECUTOR_RESUMED);
+        } else {
+          changePageStatus(PageStatus.JOB_EXECUTOR_PAUSED);
+        }
+      }
+    });
     jmenuBarMain.add(jmenuPauseJobExecutor);
 
     jmenuClear.setText("Clear");
-    jmenuClear.addMouseListener(
-        new java.awt.event.MouseAdapter() {
-          @Override
-          public void mouseClicked(java.awt.event.MouseEvent evt) {
-            try {
-              SwingUtilities.invokeLater(
-                  () -> {
-                    jtextAreaInfoLog.setText(null);
-                    jtextAreaErrorLog.setText(null);
-                    jtextAreaDebugLog.setText(null);
-                    jtextAreaMisc.setText(null);
-                  });
-              LOGGER.info("[GUI] JTextArea log cleared");
-            } catch (Exception ex) {
-              LOGGER.error("[GUI] clear JTextArea log fail", ex);
-            }
-          }
-        });
+    jmenuClear.addMouseListener(new java.awt.event.MouseAdapter() {
+      @Override
+      public void mouseClicked(java.awt.event.MouseEvent evt) {
+        try {
+          SwingUtilities.invokeLater(() -> {
+            jtextAreaInfoLog.setText(null);
+            jtextAreaErrorLog.setText(null);
+            jtextAreaDebugLog.setText(null);
+            jtextAreaMisc.setText(null);
+          });
+          LOGGER.info("[GUI] JTextArea log cleared");
+        } catch (Exception ex) {
+          LOGGER.error("[GUI] clear JTextArea log fail", ex);
+        }
+      }
+    });
 
     jmenuPauseBrowser = new JMenu("PauseBrowser");
-    jmenuPauseBrowser.addMouseListener(
-        new MouseAdapter() {
-          @Override
-          public void mouseClicked(MouseEvent e) {
-            if (controller.isPaused(PauseTarget.BROWSER)) {
-              changePageStatus(PageStatus.BROWSER_RESUMED);
-            } else {
-              changePageStatus(PageStatus.BROWSER_PAUSED);
-            }
-          }
-        });
+    jmenuPauseBrowser.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent e) {
+        if (controller.isPaused(PauseTarget.BROWSER)) {
+          changePageStatus(PageStatus.BROWSER_RESUMED);
+        } else {
+          changePageStatus(PageStatus.BROWSER_PAUSED);
+        }
+      }
+    });
     jmenuBarMain.add(jmenuPauseBrowser);
     jmenuBarMain.add(jmenuClear);
 
@@ -205,26 +204,19 @@ public class MonitorFrame extends javax.swing.JFrame {
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
-    layout.setHorizontalGroup(
-        layout
-            .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(
-                jtabbedPaneMain, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE));
-    layout.setVerticalGroup(
-        layout
-            .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(
-                jtabbedPaneMain, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE));
+    layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addComponent(jtabbedPaneMain, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE));
+    layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addComponent(jtabbedPaneMain, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE));
 
     pack();
   } // </editor-fold>//GEN-END:initComponents
 
-  private void formWindowOpened(
-      java.awt.event.WindowEvent evt) { // GEN-FIRST:event_formWindowOpened
-    SwingUtilities.invokeLater(
-        () -> {
-          this.customInit();
-        });
+  private void formWindowOpened(java.awt.event.WindowEvent evt) {
+    // GEN-FIRST:event_formWindowOpened
+    SwingUtilities.invokeLater(() -> {
+      this.customInit();
+    });
   } // GEN-LAST:event_formWindowOpened
 
   private void formWindowClosing(java.awt.event.WindowEvent evt) {
@@ -248,50 +240,42 @@ public class MonitorFrame extends javax.swing.JFrame {
   } // GEN-LAST:event_jButtonCancelActionPerformed
 
   private enum PageStatus {
-    RUNNING,
-    JOB_EXECUTOR_PAUSED,
-    JOB_EXECUTOR_RESUMED,
-    BROWSER_PAUSED,
-    BROWSER_RESUMED
+    RUNNING, JOB_EXECUTOR_PAUSED, JOB_EXECUTOR_RESUMED, BROWSER_PAUSED, BROWSER_RESUMED
   }
 
   private void changePageStatus(PageStatus newStatus) {
     switch (newStatus) {
       case JOB_EXECUTOR_RESUMED:
-        SwingUtilities.invokeLater(
-            () -> {
-              if (controller.isPaused(PauseTarget.JOB_EXECUTOR)) {
-                controller.resume(PauseTarget.JOB_EXECUTOR);
-                jmenuPauseJobExecutor.setText("PauseJobExecutor");
-              }
-            });
+        SwingUtilities.invokeLater(() -> {
+          if (controller.isPaused(PauseTarget.JOB_EXECUTOR)) {
+            controller.resume(PauseTarget.JOB_EXECUTOR);
+            jmenuPauseJobExecutor.setText("PauseJobExecutor");
+          }
+        });
         break;
       case JOB_EXECUTOR_PAUSED:
-        SwingUtilities.invokeLater(
-            () -> {
-              if (!controller.isPaused(PauseTarget.JOB_EXECUTOR)) {
-                controller.pause(PauseTarget.JOB_EXECUTOR);
-                jmenuPauseJobExecutor.setText("ResumeJobExecutor");
-              }
-            });
+        SwingUtilities.invokeLater(() -> {
+          if (!controller.isPaused(PauseTarget.JOB_EXECUTOR)) {
+            controller.pause(PauseTarget.JOB_EXECUTOR);
+            jmenuPauseJobExecutor.setText("ResumeJobExecutor");
+          }
+        });
         break;
       case BROWSER_RESUMED:
-        SwingUtilities.invokeLater(
-            () -> {
-              if (controller.isPaused(PauseTarget.BROWSER)) {
-                controller.resume(PauseTarget.BROWSER);
-                jmenuPauseBrowser.setText("PauseBowser");
-              }
-            });
+        SwingUtilities.invokeLater(() -> {
+          if (controller.isPaused(PauseTarget.BROWSER)) {
+            controller.resume(PauseTarget.BROWSER);
+            jmenuPauseBrowser.setText("PauseBowser");
+          }
+        });
         break;
       case BROWSER_PAUSED:
-        SwingUtilities.invokeLater(
-            () -> {
-              if (!controller.isPaused(PauseTarget.BROWSER)) {
-                controller.pause(PauseTarget.BROWSER);
-                jmenuPauseBrowser.setText("ResumeBowser");
-              }
-            });
+        SwingUtilities.invokeLater(() -> {
+          if (!controller.isPaused(PauseTarget.BROWSER)) {
+            controller.pause(PauseTarget.BROWSER);
+            jmenuPauseBrowser.setText("ResumeBowser");
+          }
+        });
         break;
       default:
         break;
@@ -309,47 +293,38 @@ public class MonitorFrame extends javax.swing.JFrame {
       ex.printStackTrace(System.out);
     } finally {
       controller = null;
+      SpringApplication.exit(applicationContext);
     }
   }
 
   private void refreshTitle(String extra) {
     try {
-      String title =
-          String.format(
-              "JobScheduler(%s-%s)_%s",
-              jobSchedulerConfig.getInstanceName(),
-              this.getClass().getPackage().getImplementationVersion(),
-              extra);
+      String title = String.format("JobScheduler(%s-%s)_%s", jobSchedulerConfig.getInstanceName(),
+          this.getClass().getPackage().getImplementationVersion(), extra);
       String since = ", since " + TimeUtility.toStr(initTime, "yyyy-MM-dd HH:mm:ss");
-      SwingUtilities.invokeLater(
-          () -> {
-            this.setTitle(title + since);
-          });
+      SwingUtilities.invokeLater(() -> {
+        this.setTitle(title + since);
+      });
     } catch (Exception ex) {
       LOGGER.error("[GUI] set frame title error", ex);
     }
   }
 
-  private static void setJTextAreaLogAppender(String appenderName, JTextArea textArea) {
+  private static void setJtextAreaLogAppender(String appenderName, JTextArea textArea) {
     LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
-    context
-        .getLoggerList()
-        .stream()
+    context.getLoggerList().stream()
         .map((logger) -> (AsyncAppender) logger.getAppender(appenderName))
-        .filter((asyncAppender) -> (asyncAppender != null))
-        .forEachOrdered(
-            (asyncAppender) -> {
-              asyncAppender
-                  .iteratorForAppenders()
-                  .forEachRemaining(f -> ((JTextAreaLogAppender) f).setTextArea(textArea));
-            });
+        .filter((asyncAppender) -> (asyncAppender != null)).forEachOrdered((asyncAppender) -> {
+          asyncAppender.iteratorForAppenders()
+              .forEachRemaining(f -> ((JtextAreaLogAppender) f).setTextArea(textArea));
+        });
   }
 
   private void customInit() {
     // 1. init
-    setJTextAreaLogAppender("asyncJTextAreaError", this.jtextAreaErrorLog);
-    setJTextAreaLogAppender("asyncJTextAreaInfo", this.jtextAreaInfoLog);
-    setJTextAreaLogAppender("asyncJTextAreaDebug", this.jtextAreaDebugLog);
+    setJtextAreaLogAppender("asyncJTextAreaError", this.jtextAreaErrorLog);
+    setJtextAreaLogAppender("asyncJTextAreaInfo", this.jtextAreaInfoLog);
+    setJtextAreaLogAppender("asyncJTextAreaDebug", this.jtextAreaDebugLog);
 
     // 2. refresh title
     refreshTitle("");
@@ -358,51 +333,36 @@ public class MonitorFrame extends javax.swing.JFrame {
     this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
     // 4. start timer worker
-    controller.setExecutingJobDescriptionConsumer(
-        (s) -> {
-          refreshTitle(s);
-        });
-    controller.setPreInteractionFunction(
-        () -> {
-          SwingUtilities.invokeLater(
-              () -> {
-                jbuttonPositive.setEnabled(true);
-                jbuttonCancel.setEnabled(true);
-                jtabbedPaneMain.setSelectedIndex(jtabbedPaneMain.getTabCount() - 1);
-              });
-        });
-    controller.setAfterPauseFunction(
-        PauseTarget.BROWSER,
-        () -> {
-          SwingUtilities.invokeLater(
-              () -> {
-                jmenuPauseBrowser.setText("ResumeBrowser");
-              });
-        });
-    controller.setAfterResumeFunction(
-        PauseTarget.BROWSER,
-        () -> {
-          SwingUtilities.invokeLater(
-              () -> {
-                jmenuPauseBrowser.setText("PauseBrowser");
-              });
-        });
-    controller.setAfterPauseFunction(
-        PauseTarget.JOB_EXECUTOR,
-        () -> {
-          SwingUtilities.invokeLater(
-              () -> {
-                jmenuPauseJobExecutor.setText("ResumeJobExecutor");
-              });
-        });
-    controller.setAfterResumeFunction(
-        PauseTarget.JOB_EXECUTOR,
-        () -> {
-          SwingUtilities.invokeLater(
-              () -> {
-                jmenuPauseJobExecutor.setText("PauseJobExecutor");
-              });
-        });
+    controller.setExecutingJobDescriptionConsumer((s) -> {
+      refreshTitle(s);
+    });
+    controller.setPreInteractionFunction(() -> {
+      SwingUtilities.invokeLater(() -> {
+        jbuttonPositive.setEnabled(true);
+        jbuttonCancel.setEnabled(true);
+        jtabbedPaneMain.setSelectedIndex(jtabbedPaneMain.getTabCount() - 1);
+      });
+    });
+    controller.setAfterPauseFunction(PauseTarget.BROWSER, () -> {
+      SwingUtilities.invokeLater(() -> {
+        jmenuPauseBrowser.setText("ResumeBrowser");
+      });
+    });
+    controller.setAfterResumeFunction(PauseTarget.BROWSER, () -> {
+      SwingUtilities.invokeLater(() -> {
+        jmenuPauseBrowser.setText("PauseBrowser");
+      });
+    });
+    controller.setAfterPauseFunction(PauseTarget.JOB_EXECUTOR, () -> {
+      SwingUtilities.invokeLater(() -> {
+        jmenuPauseJobExecutor.setText("ResumeJobExecutor");
+      });
+    });
+    controller.setAfterResumeFunction(PauseTarget.JOB_EXECUTOR, () -> {
+      SwingUtilities.invokeLater(() -> {
+        jmenuPauseJobExecutor.setText("PauseJobExecutor");
+      });
+    });
     controller.start();
 
     // 5. init inner timer
@@ -410,38 +370,15 @@ public class MonitorFrame extends javax.swing.JFrame {
     timerExecutor.setContinueExistingPeriodicTasksAfterShutdownPolicy(false);
     timerExecutor.setExecuteExistingDelayedTasksAfterShutdownPolicy(false);
     int logClearInterval = jobSchedulerConfig.getGuiClearLogInterval();
-    timerExecutor.scheduleWithFixedDelay(
-        () -> {
-          SwingUtilities.invokeLater(
-              () -> {
-                jtextAreaInfoLog.setText(null);
-                jtextAreaErrorLog.setText(null);
-                jtextAreaDebugLog.setText(null);
-                jtextAreaMisc.setText(null);
-              });
-          LOGGER.info("[GUI] clearn JTextAreaLog every {} seconds", logClearInterval);
-        },
-        logClearInterval,
-        logClearInterval,
-        TimeUnit.SECONDS);
-  }
-
-  /**
-   * Get brief information about this window frame.
-   *
-   * @return window information
-   */
-  public String ping() {
-    String fullLog = jtextAreaInfoLog.getText();
-    if (fullLog.endsWith(System.lineSeparator())) {
-      fullLog = fullLog.substring(0, fullLog.length() - System.lineSeparator().length());
-    }
-    int index = fullLog.lastIndexOf(System.lineSeparator());
-    if (index >= 0) {
-      return fullLog.substring(index);
-    } else {
-      return fullLog;
-    }
+    timerExecutor.scheduleWithFixedDelay(() -> {
+      SwingUtilities.invokeLater(() -> {
+        jtextAreaInfoLog.setText(null);
+        jtextAreaErrorLog.setText(null);
+        jtextAreaDebugLog.setText(null);
+        jtextAreaMisc.setText(null);
+      });
+      LOGGER.info("[GUI] clearn JTextAreaLog every {} seconds", logClearInterval);
+    }, logClearInterval, logClearInterval, TimeUnit.SECONDS);
   }
 
   // Variables declaration - do not modify//GEN-BEGIN:variables

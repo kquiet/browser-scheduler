@@ -83,35 +83,25 @@ public class JobController {
           long initialDelay = ChronoUnit.MILLIS.between(now, initDateTime);
           Runnable toRun = compileJob(impl, interval);
           if (config.isScheduleAfterExec()) {
-            scheduledTask.put(
-                impl.getJobName(),
-                jobExecutor.scheduleWithFixedDelay(
-                    toRun, initialDelay, interval * 1000, TimeUnit.MILLISECONDS));
+            scheduledTask.put(impl.getJobName(), jobExecutor.scheduleWithFixedDelay(toRun,
+                initialDelay, interval * 1000, TimeUnit.MILLISECONDS));
           } else {
-            scheduledTask.put(
-                impl.getJobName(),
-                jobExecutor.scheduleAtFixedRate(
-                    toRun, initialDelay, interval * 1000, TimeUnit.MILLISECONDS));
+            scheduledTask.put(impl.getJobName(), jobExecutor.scheduleAtFixedRate(toRun,
+                initialDelay, interval * 1000, TimeUnit.MILLISECONDS));
           }
           scheduleJobList.add(impl);
           LOGGER.info(
               "[Ctrl] Job {}({}) scheduled with fixed {}({})"
                   + ", first execution will be at around {}",
-              impl.getJobName(),
-              impl.getClass().getName(),
-              config.isScheduleAfterExec() ? "delay" : "rate",
-              interval,
+              impl.getJobName(), impl.getClass().getName(),
+              config.isScheduleAfterExec() ? "delay" : "rate", interval,
               TimeUtility.toStr(initDateTime, "yyyy-MM-dd HH:mm:ss"));
         } else {
-          LOGGER.info(
-              "[Ctrl] Job {}({}) won't be fired due to its configuration",
-              impl.getJobName(),
-              impl.getClass().getName());
+          LOGGER.info("[Ctrl] Job {}({}) won't be fired due to its configuration",
+              impl.getJobName(), impl.getClass().getName());
         }
       } else {
-        LOGGER.info(
-            "[Ctrl] Duplicate job found:{}({}), skipped",
-            impl.getJobName(),
+        LOGGER.info("[Ctrl] Duplicate job found:{}({}), skipped", impl.getJobName(),
             impl.getClass().getName());
       }
     }
@@ -127,15 +117,13 @@ public class JobController {
           LOGGER.info(
               "[Scheduler] Job({}) is cancelled because it isn't allowed to be executed"
                   + " outside the period:{} ~ {}",
-              jobToRun.getJobName(),
-              TimeUtility.toStr(config.getStart(), "yyyy-MM-dd HH:mm:ss"),
+              jobToRun.getJobName(), TimeUtility.toStr(config.getStart(), "yyyy-MM-dd HH:mm:ss"),
               TimeUtility.toStr(config.getEnd(), "yyyy-MM-dd HH:mm:ss"));
           return;
         }
 
         if (!config.isScheduleAfterExec()) {
-          LOGGER.info(
-              "[Scheduler] Next execution of {} will be at around {}",
+          LOGGER.info("[Scheduler] Next execution of {} will be at around {}",
               jobToRun.getJobName(),
               TimeUtility.toStr(LocalDateTime.now().plusSeconds(interval), "yyyy-MM-dd HH:mm:ss"));
         }
@@ -144,10 +132,8 @@ public class JobController {
           try {
             getExecutingJobDescriptionConsumer().accept(jobToRun.getJobName());
           } catch (Exception ex) {
-            LOGGER.error(
-                "[Scheduler] {} executingJobDescriptionDelegate exception:",
-                jobToRun.getJobName(),
-                ex);
+            LOGGER.error("[Scheduler] {} executingJobDescriptionDelegate exception:",
+                jobToRun.getJobName(), ex);
           }
         }
 
@@ -158,8 +144,7 @@ public class JobController {
         }
 
         if (config.isScheduleAfterExec()) {
-          LOGGER.info(
-              "[Scheduler] Next execution of {} will be at around {}",
+          LOGGER.info("[Scheduler] Next execution of {} will be at around {}",
               jobToRun.getJobName(),
               TimeUtility.toStr(LocalDateTime.now().plusSeconds(interval), "yyyy-MM-dd HH:mm:ss"));
         }
@@ -199,7 +184,7 @@ public class JobController {
    * Start to initialize jobs and schedule them by configuration.
    *
    * @param jobList the jobs to be scheduled; if not presented, this controller will try to load job
-   *     from jobscheduler.config
+   *        from jobscheduler.config
    */
   public void start(Iterable<JobBase> jobList) {
     try {
@@ -308,10 +293,8 @@ public class JobController {
     }
 
     if (autoResumable && !pauseConfig.autoResumable) {
-      LOGGER.info(
-          "[Ctrl] Can't resume "
-              + target.toString()
-              + " automatically because system was paused by user, please resume manually");
+      LOGGER.info("[Ctrl] Can't resume " + target.toString()
+          + " automatically because system was paused by user, please resume manually");
       return false;
     }
 
@@ -434,14 +417,9 @@ public class JobController {
     if (jobSchedulerConfig.isBrowserHeadless()) {
       System.setProperty("webdriver_headless", "yes");
     }
-    ActionRunner btm =
-        browserType == null
-            ? null
-            : new BasicActionRunner(
-                    jobSchedulerConfig.getBrowserPageLoadStrategy(),
-                    browserType,
-                    jobSchedulerConfig.getBrowserMaxTask())
-                .setName("ActionRunner");
+    ActionRunner btm = browserType == null ? null
+        : new BasicActionRunner(jobSchedulerConfig.getBrowserPageLoadStrategy(), browserType,
+            jobSchedulerConfig.getBrowserMaxTask()).setName("ActionRunner");
     if (btm != null) {
       LOGGER.info("[Ctrl] browser task manger created");
     }
@@ -575,13 +553,13 @@ public class JobController {
     private volatile Runnable afterResumeFunc = null;
   }
 
+  /** Targeted component to pause in controller. */
   public enum PauseTarget {
-    BROWSER,
-    JOB_EXECUTOR;
+    BROWSER, JOB_EXECUTOR;
   }
 
+  /** Component interaction type. */
   public enum InteractionType {
-    POSITIVE,
-    NEGATIVE;
+    POSITIVE, NEGATIVE;
   }
 }
