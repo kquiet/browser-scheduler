@@ -1,1 +1,1 @@
-moduleSearchIndex = [{"l":"org.kquiet.jobscheduler"}];updateSearchResults();
+moduleSearchIndex = [{"l":"org.kquiet.browserscheduler"}];updateSearchResults();
