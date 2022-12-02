@@ -1,6 +1,6 @@
 spring:
   application:
-    name: job-scheduler
+    name: browser-scheduler
   jmx:
     enabled: false
     unique-names: true
@@ -9,6 +9,6 @@ management:
   endpoints:
     enabled-by-default: false
 
-job-scheduler:
-  instanceName: JobSchedulerTest
+browser-scheduler:
+  instanceName: BrowserSchedulerTest
   jobParallelism: 2

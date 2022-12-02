@@ -12,7 +12,7 @@
  * the License.
  */
 
-package org.kquiet.jobscheduler.util;
+package org.kquiet.browserscheduler.util;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

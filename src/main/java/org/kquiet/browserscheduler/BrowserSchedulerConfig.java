@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.kquiet.jobscheduler;
+package org.kquiet.browserscheduler;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -27,7 +27,7 @@ import org.openqa.selenium.PageLoadStrategy;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /** System config. */
-public class JobSchedulerConfig {
+public class BrowserSchedulerConfig {
 
   private String instanceName = "";
 

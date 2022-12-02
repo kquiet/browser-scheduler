@@ -111,7 +111,7 @@
         </encoder>
     </appender>
     
-    <appender name="jTextAreaError" class="org.kquiet.jobscheduler.util.JtextAreaLogAppender">
+    <appender name="jTextAreaError" class="org.kquiet.browserscheduler.util.JtextAreaLogAppender">
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>WARN</level>
         </filter>
@@ -125,7 +125,7 @@
         <appender-ref ref="jTextAreaError" />
     </appender>
     
-    <appender name="jTextAreaInfo" class="org.kquiet.jobscheduler.util.JtextAreaLogAppender">
+    <appender name="jTextAreaInfo" class="org.kquiet.browserscheduler.util.JtextAreaLogAppender">
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>INFO</level>
             <onMatch>NEUTRAL</onMatch>
@@ -141,8 +141,8 @@
         <appender-ref ref="jTextAreaInfo" />
     </appender>
     
-    <appender name="jTextAreaDebug" class="org.kquiet.jobscheduler.util.JtextAreaLogAppender">
-        <filter class="org.kquiet.jobscheduler.util.UpperBoundFilter">
+    <appender name="jTextAreaDebug" class="org.kquiet.browserscheduler.util.JtextAreaLogAppender">
+        <filter class="org.kquiet.browserscheduler.util.UpperBoundFilter">
             <level>DEBUG</level>
         </filter>
         <encoder>

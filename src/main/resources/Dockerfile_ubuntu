@@ -19,16 +19,16 @@ RUN apt-get update \
  && curl -s -L -O "https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip" \
  && unzip chromedriver_linux64.zip && chmod +x chromedriver && mv chromedriver /usr/local/bin && rm chromedriver_linux64.zip \
  && apt-get install -y --no-install-recommends firefox firefox-geckodriver \
- && mkdir -p /opt/kquiet/job-scheduler/ext \
+ && mkdir -p /opt/kquiet/${project.artifactId}/ext \
  && useradd -U kquiet -m -s /bin/bash \
  && chown -R kquiet:kquiet /opt/kquiet/
 
 WORKDIR /opt/kquiet/${project.artifactId}
 
-COPY --chown=kquiet:kquiet ["jobscheduler.sh", "./"]
+COPY --chown=kquiet:kquiet ["browserscheduler.sh", "./"]
 
 COPY --chown=kquiet:kquiet ["${project.build.finalName}.jar", "lib", "logback.xml", "./lib/"]
 
 USER kquiet:kquiet
 
-ENTRYPOINT ["./jobscheduler.sh"]
+ENTRYPOINT ["./browserscheduler.sh"]

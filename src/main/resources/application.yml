@@ -1,6 +1,6 @@
 spring:
   application:
-    name: job-scheduler
+    name: browser-scheduler
   security:
     user:
       name: user
@@ -23,8 +23,8 @@ management:
     shutdown:
       enabled: false
 
-job-scheduler:
-  instanceName: JobSchedulerDefault
+browser-scheduler:
+  instanceName: BrowserSchedulerDefault
   gui:
     enable: true
     clearLogInterval: 43200
@@ -37,7 +37,7 @@ job-scheduler:
   jobs:
   - name: RestartBrowser1
     enable: true
-    impl: org.kquiet.jobscheduler.impl.common.RestartBrowser
+    impl: org.kquiet.browserscheduler.impl.common.RestartBrowser
     start: "2022-01-01T00:00:00"
     end: "2022-12-31T00:00:00"
     dailyStart: "23:00:00"
@@ -48,7 +48,7 @@ job-scheduler:
       abc: "def"
   - name: RestartBrowser2
     enable: false
-    impl: org.kquiet.jobscheduler.impl.common.RestartBrowser
+    impl: org.kquiet.browserscheduler.impl.common.RestartBrowser
     dailyStart: "05:00:00"
     dailyEnd: "05:00:01"
     interval: 43200

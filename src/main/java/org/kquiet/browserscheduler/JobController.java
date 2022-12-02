@@ -12,7 +12,7 @@
  * the License.
  */
 
-package org.kquiet.jobscheduler;
+package org.kquiet.browserscheduler;
 
 import java.lang.reflect.Constructor;
 import java.time.LocalDateTime;
@@ -30,9 +30,9 @@ import org.kquiet.browser.ActionComposer;
 import org.kquiet.browser.ActionRunner;
 import org.kquiet.browser.BasicActionRunner;
 import org.kquiet.browser.BrowserType;
+import org.kquiet.browserscheduler.BrowserSchedulerConfig.JobConfig;
+import org.kquiet.browserscheduler.util.TimeUtility;
 import org.kquiet.concurrent.PausableScheduledThreadPoolExecutor;
-import org.kquiet.jobscheduler.JobSchedulerConfig.JobConfig;
-import org.kquiet.jobscheduler.util.TimeUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
 public class JobController {
   private static final Logger LOGGER = LoggerFactory.getLogger(JobController.class);
 
-  private JobSchedulerConfig jobSchedulerConfig;
+  private BrowserSchedulerConfig browserSchedulerConfig;
   private volatile ActionRunner browserAgent;
   private final Phaser interactionPhaser;
   private volatile InteractionType latestInteractionType;
@@ -55,10 +55,10 @@ public class JobController {
   private volatile Consumer<String> executingJobDescriptionConsumer = null;
 
   /** Create a new job controller. */
-  public JobController(JobSchedulerConfig jobSchedulerConfig) {
-    this.jobSchedulerConfig = jobSchedulerConfig;
+  public JobController(BrowserSchedulerConfig browserSchedulerConfig) {
+    this.browserSchedulerConfig = browserSchedulerConfig;
     browserAgent = createNewActionRunner();
-    int parallelism = jobSchedulerConfig.getJobParallelism();
+    int parallelism = browserSchedulerConfig.getJobParallelism();
     jobExecutor = new PausableScheduledThreadPoolExecutor("CtrlJobExecutor", parallelism);
     jobExecutor.setContinueExistingPeriodicTasksAfterShutdownPolicy(false);
     jobExecutor.setExecuteExistingDelayedTasksAfterShutdownPolicy(false);
@@ -155,7 +155,7 @@ public class JobController {
   }
 
   private Iterable<JobBase> getConfigJobs() {
-    List<JobConfig> jobConfigMap = jobSchedulerConfig.getEnableJobs();
+    List<JobConfig> jobConfigMap = browserSchedulerConfig.getEnableJobs();
     if (jobConfigMap.isEmpty()) {
       LOGGER.warn("[Ctrl] Can't find jobs from config!");
       return new ArrayList<>();
@@ -184,7 +184,7 @@ public class JobController {
    * Start to initialize jobs and schedule them by configuration.
    *
    * @param jobList the jobs to be scheduled; if not presented, this controller will try to load job
-   *        from jobscheduler.config
+   *        from configuration
    */
   public void start(Iterable<JobBase> jobList) {
     try {
@@ -413,13 +413,13 @@ public class JobController {
   }
 
   private ActionRunner createNewActionRunner() {
-    BrowserType browserType = BrowserType.fromString(jobSchedulerConfig.getBrowserType());
-    if (jobSchedulerConfig.isBrowserHeadless()) {
+    BrowserType browserType = BrowserType.fromString(browserSchedulerConfig.getBrowserType());
+    if (browserSchedulerConfig.isBrowserHeadless()) {
       System.setProperty("webdriver_headless", "yes");
     }
     ActionRunner btm = browserType == null ? null
-        : new BasicActionRunner(jobSchedulerConfig.getBrowserPageLoadStrategy(), browserType,
-            jobSchedulerConfig.getBrowserMaxTask()).setName("ActionRunner");
+        : new BasicActionRunner(browserSchedulerConfig.getBrowserPageLoadStrategy(), browserType,
+            browserSchedulerConfig.getBrowserMaxTask()).setName("ActionRunner");
     if (btm != null) {
       LOGGER.info("[Ctrl] browser task manger created");
     }

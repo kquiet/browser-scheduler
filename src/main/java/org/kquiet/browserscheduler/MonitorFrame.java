@@ -12,7 +12,7 @@
  * the License.
  */
 
-package org.kquiet.jobscheduler;
+package org.kquiet.browserscheduler;
 
 import ch.qos.logback.classic.AsyncAppender;
 import ch.qos.logback.classic.LoggerContext;
@@ -26,11 +26,11 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
+import org.kquiet.browserscheduler.JobController.InteractionType;
+import org.kquiet.browserscheduler.JobController.PauseTarget;
+import org.kquiet.browserscheduler.util.JtextAreaLogAppender;
+import org.kquiet.browserscheduler.util.TimeUtility;
 import org.kquiet.concurrent.PausableScheduledThreadPoolExecutor;
-import org.kquiet.jobscheduler.JobController.InteractionType;
-import org.kquiet.jobscheduler.JobController.PauseTarget;
-import org.kquiet.jobscheduler.util.JtextAreaLogAppender;
-import org.kquiet.jobscheduler.util.TimeUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +44,7 @@ public class MonitorFrame extends javax.swing.JFrame {
 
   private final LocalDateTime initTime = LocalDateTime.now();
   @Autowired
-  private transient JobSchedulerConfig jobSchedulerConfig;
+  private transient BrowserSchedulerConfig browserSchedulerConfig;
   @Autowired
   private transient JobController controller;
   @Autowired
@@ -299,8 +299,9 @@ public class MonitorFrame extends javax.swing.JFrame {
 
   private void refreshTitle(String extra) {
     try {
-      String title = String.format("JobScheduler(%s-%s)_%s", jobSchedulerConfig.getInstanceName(),
-          this.getClass().getPackage().getImplementationVersion(), extra);
+      String title =
+          String.format("BrowserScheduler(%s-%s)_%s", browserSchedulerConfig.getInstanceName(),
+              this.getClass().getPackage().getImplementationVersion(), extra);
       String since = ", since " + TimeUtility.toStr(initTime, "yyyy-MM-dd HH:mm:ss");
       SwingUtilities.invokeLater(() -> {
         this.setTitle(title + since);
@@ -369,7 +370,7 @@ public class MonitorFrame extends javax.swing.JFrame {
     timerExecutor = new PausableScheduledThreadPoolExecutor("FrameTimerExecutor", 1);
     timerExecutor.setContinueExistingPeriodicTasksAfterShutdownPolicy(false);
     timerExecutor.setExecuteExistingDelayedTasksAfterShutdownPolicy(false);
-    int logClearInterval = jobSchedulerConfig.getGuiClearLogInterval();
+    int logClearInterval = browserSchedulerConfig.getGuiClearLogInterval();
     timerExecutor.scheduleWithFixedDelay(() -> {
       SwingUtilities.invokeLater(() -> {
         jtextAreaInfoLog.setText(null);

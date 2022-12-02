@@ -12,7 +12,7 @@
  * the License.
  */
 
-package org.kquiet.jobscheduler;
+package org.kquiet.browserscheduler;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -29,7 +29,7 @@ import org.springframework.context.ApplicationContext;
 public class Launcher implements CommandLineRunner {
 
   @Autowired
-  private JobSchedulerConfig jobSchedulerConfig;
+  private BrowserSchedulerConfig browserSchedulerConfig;
   @Autowired
   private ApplicationContext applicationContext;
 
@@ -44,7 +44,7 @@ public class Launcher implements CommandLineRunner {
 
   @Override
   public void run(String... args) throws Exception {
-    if (jobSchedulerConfig.isGuiEnable()) {
+    if (browserSchedulerConfig.isGuiEnable()) {
       System.setProperty("java.awt.headless", "false");
       MonitorFrame launchedObj = applicationContext.getBean(MonitorFrame.class);
       launchedObj.setVisible(true);

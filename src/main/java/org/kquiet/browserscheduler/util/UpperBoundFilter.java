@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.kquiet.jobscheduler.util;
+package org.kquiet.browserscheduler.util;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ILoggingEvent;

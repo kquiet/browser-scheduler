@@ -12,7 +12,7 @@
  * the License.
  */
 
-package org.kquiet.jobscheduler.test;
+package org.kquiet.browserscheduler.test;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -30,10 +30,10 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.kquiet.jobscheduler.BeanConfiguration;
-import org.kquiet.jobscheduler.JobBase;
-import org.kquiet.jobscheduler.JobController;
-import org.kquiet.jobscheduler.JobSchedulerConfig.JobConfig;
+import org.kquiet.browserscheduler.BeanConfiguration;
+import org.kquiet.browserscheduler.BrowserSchedulerConfig.JobConfig;
+import org.kquiet.browserscheduler.JobBase;
+import org.kquiet.browserscheduler.JobController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +49,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 @EnableConfigurationProperties
 class IntegrationTest {
   private static final Logger LOGGER = LoggerFactory.getLogger(IntegrationTest.class);
-  @Autowired private JobController controller;
+  @Autowired
+  private JobController controller;
 
   @BeforeAll
   public static void setUpClass() {}
@@ -81,14 +82,11 @@ class IntegrationTest {
     }
     controller.stop();
     boolean jobDone = temp;
-    assertAll(
-        () -> assertTrue(jobDone),
+    assertAll(() -> assertTrue(jobDone),
         () -> assertEquals(2, parameterValueList.size(), "Wrong parameter value size"),
-        () ->
-            assertEquals(
-                "TestJob1,TestJob2",
-                String.join(",", parameterValueList.stream().sorted().collect(Collectors.toList())),
-                "Wrong parameter value sequence"));
+        () -> assertEquals("TestJob1,TestJob2",
+            String.join(",", parameterValueList.stream().sorted().collect(Collectors.toList())),
+            "Wrong parameter value sequence"));
   }
 
   static class TestJobBase extends JobBase {
@@ -105,8 +103,8 @@ class IntegrationTest {
     public void run() {
       LOGGER.info("[{}] starts", this.getJobName());
       parameterValueList.add(getParameter("testParameter"));
-      LOGGER.info(
-          "[{}] done with testParameter={}", this.getJobName(), this.getParameter("testParameter"));
+      LOGGER.info("[{}] done with testParameter={}", this.getJobName(),
+          this.getParameter("testParameter"));
       if (latch != null) {
         latch.countDown();
       }

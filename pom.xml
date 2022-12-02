@@ -2,12 +2,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.kquiet</groupId>
-  <artifactId>job-scheduler</artifactId>
-  <version>2.0.1</version>
+  <artifactId>browser-scheduler</artifactId>
+  <version>2.0.2-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>${project.groupId}:${project.artifactId}</name>
-  <description>A job scheduler which supports customized browser automation.</description>
-  <url>https://github.com/kquiet/job-scheduler</url>
+  <description>A scheduler of browser jobs supporting customized browser automation.</description>
+  <url>https://github.com/kquiet/browser-scheduler</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -144,7 +144,7 @@
         <artifactId>spring-boot-maven-plugin</artifactId>
         <version>${spring.boot.version}</version>
         <configuration>
-          <mainClass>${project.groupId}.jobscheduler.Launcher</mainClass>
+          <mainClass>${project.groupId}.browserscheduler.Launcher</mainClass>
         </configuration>
       </plugin>
       <plugin>
@@ -162,7 +162,7 @@
         <configuration>
           <archive>
             <manifest>
-              <!--<mainClass>${project.groupId}.jobscheduler.Launcher</mainClass>-->
+              <mainClass>${project.groupId}.browserscheduler.Launcher</mainClass>
               <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
               <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
             </manifest>
@@ -358,7 +358,7 @@
                 <webdriver_headless>yes</webdriver_headless>
               </systemPropertyVariables>
               <argLine>
-                --add-opens org.kquiet.jobscheduler/org.kquiet.jobscheduler.test=spring.core
+                --add-opens org.kquiet.browserscheduler/org.kquiet.browserscheduler.test=spring.core
               </argLine>
             </configuration>
           </plugin>
@@ -515,9 +515,9 @@
   </developers>
 
   <scm>
-    <connection>scm:git:https://github.com/kquiet/job-scheduler.git</connection>
-    <developerConnection>scm:git:https://github.com/kquiet/job-scheduler.git</developerConnection>
-    <url>https://github.com/kquiet/job-scheduler/tree/master</url>
-    <tag>job-scheduler-2.0.1</tag>
+    <connection>scm:git:https://github.com/kquiet/browser-scheduler.git</connection>
+    <developerConnection>scm:git:https://github.com/kquiet/browser-scheduler.git</developerConnection>
+    <url>https://github.com/kquiet/browser-scheduler/tree/master</url>
+    <tag>HEAD</tag>
   </scm>
 </project>

@@ -1,7 +1,7 @@
-module org.kquiet.jobscheduler {
-  exports org.kquiet.jobscheduler;
-  exports org.kquiet.jobscheduler.impl.common;
-  exports org.kquiet.jobscheduler.util;
+module org.kquiet.browserscheduler {
+  exports org.kquiet.browserscheduler;
+  exports org.kquiet.browserscheduler.impl.common;
+  exports org.kquiet.browserscheduler.util;
 
   requires transitive org.kquiet.autobrowser;
   requires transitive ch.qos.logback.classic;
@@ -15,5 +15,5 @@ module org.kquiet.jobscheduler {
   requires spring.context;
   requires spring.core;
 
-  opens org.kquiet.jobscheduler to spring.core;
+  opens org.kquiet.browserscheduler to spring.core;
 }
