@@ -517,7 +517,7 @@
   <scm>
     <connection>scm:git:https://github.com/kquiet/browser-scheduler.git</connection>
     <developerConnection>scm:git:https://github.com/kquiet/browser-scheduler.git</developerConnection>
-    <url>https://github.com/kquiet/browser-scheduler/tree/master</url>
+    <url>https://github.com/kquiet/browser-scheduler/tree/main</url>
     <tag>HEAD</tag>
   </scm>
 </project>
