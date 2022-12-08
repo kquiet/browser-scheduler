@@ -12,7 +12,7 @@
  * the License.
  */
 
-package org.kquiet.browserscheduler.test;
+package org.kquiet.browserscheduler;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;

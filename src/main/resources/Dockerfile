@@ -4,6 +4,7 @@ RUN apk --no-cache add ca-certificates curl jq openjdk17-jre font-noto-cjk 'chro
  && GECKO_URL=`curl -s https://api.github.com/repos/mozilla/geckodriver/releases/latest | jq -r '.assets[]|select(.name|endswith(".tar.gz"))|.browser_download_url|select(contains("linux64"))'` \
  && cd /usr/local/bin && curl -s -L $GECKO_URL | tar -xz && chmod +x geckodriver \
  && mkdir -p /opt/kquiet/${project.artifactId}/ext \
+ && wget -O /opt/kquiet/${project.artifactId}/opentelemetry-javaagent.jar https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/latest/download/opentelemetry-javaagent.jar \
  && addgroup kquiet && adduser -G kquiet -D kquiet \
  && chown -R kquiet:kquiet /opt/kquiet/
 

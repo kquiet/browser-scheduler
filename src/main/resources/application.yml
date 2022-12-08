@@ -34,6 +34,7 @@ browser-scheduler:
     pageLoadStrategy: none
     headless: false
   jobParallelism: 1
+  springComponentScanBasePackages: ""
   jobs:
   - name: RestartBrowser1
     enable: true

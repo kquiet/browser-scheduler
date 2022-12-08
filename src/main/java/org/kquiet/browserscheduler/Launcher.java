@@ -25,7 +25,8 @@ import org.springframework.context.ApplicationContext;
  *
  * @author Kimberly
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"org.kquiet.browserscheduler",
+    "${browser-scheduler.springComponentScanBasePackages:}"})
 public class Launcher implements CommandLineRunner {
 
   @Autowired
