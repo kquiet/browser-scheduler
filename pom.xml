@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.kquiet</groupId>
   <artifactId>browser-scheduler</artifactId>
-  <version>2.0.3-SNAPSHOT</version>
+  <version>2.0.3</version>
   <packaging>jar</packaging>
   <name>${project.groupId}:${project.artifactId}</name>
   <description>A scheduler of browser jobs supporting customized browser automation.</description>
@@ -539,6 +539,6 @@
     <connection>scm:git:https://github.com/kquiet/browser-scheduler.git</connection>
     <developerConnection>scm:git:https://github.com/kquiet/browser-scheduler.git</developerConnection>
     <url>https://github.com/kquiet/browser-scheduler/tree/main</url>
-    <tag>HEAD</tag>
+    <tag>browser-scheduler-2.0.3</tag>
   </scm>
 </project>
