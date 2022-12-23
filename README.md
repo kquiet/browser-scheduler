@@ -69,6 +69,7 @@ browser-scheduler:
     pageLoadStrategy: none
     headless: false
   jobParallelism: 1
+  springComponentScanBasePackages: "org.kquiet.browserjob.impl"
   jobs:
   - name: RestartBrowser
     enable: true
@@ -92,6 +93,7 @@ browser-scheduler:
 |`browser.pageLoadStrategy`|`none`|It controls the behavior of waiting for page loads in the internal browser|
 |`browser.headless`|`true`|`true`: internal browser will display its GUI;`false`: internal browser won't display its GUI|
 |`jobParallelism`|`1`|It controls how many jobs could be executed concurrently at most.|
+|`springComponentScanBasePackages`||Extra base packages for spring component scanning .|
 |`jobs[*].name`||The name of job|
 |`jobs[*].enable`||Indicate whether the job is enabled to be scheduled|
 |`jobs[*].impl`||Implementation class name of job|
