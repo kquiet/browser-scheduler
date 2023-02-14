@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"m":"org.kquiet.browserscheduler","l":"org.kquiet.browserscheduler"},{"m":"org.kquiet.browserscheduler","l":"org.kquiet.browserscheduler.impl.common"},{"m":"org.kquiet.browserscheduler","l":"org.kquiet.browserscheduler.util"}];updateSearchResults();
