@@ -171,7 +171,7 @@ jobs:
       with:
         path: target/site/apidocs
   deploy-github-page:
-    needs: [precheck, call-maven-test, maven-deploy-staging, generate-javadoc]
+    needs: [precheck, call-maven-test, maven-dockerhub-deploy-staging, generate-javadoc]
     permissions:
       pages: write
       id-token: write
