@@ -27,8 +27,10 @@ WORKDIR /opt/kquiet/${project.artifactId}
 
 COPY --chown=kquiet:kquiet ["browserscheduler.sh", "./"]
 
-COPY --chown=kquiet:kquiet ["${project.build.finalName}.jar", "lib", "logback.xml", "./lib/"]
+COPY --chown=kquiet:kquiet ["${project.build.finalName}.jar", "lib", "application.yml", "logback-spring.xml", "./lib/"]
 
 USER kquiet:kquiet
+
+RUN chmod +x ./browserscheduler.sh
 
 ENTRYPOINT ["./browserscheduler.sh"]

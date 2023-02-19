@@ -5,7 +5,7 @@ spring:
     user:
       name: user
 server:
-  port: 26026
+  port: 8080
 management:
   endpoints:
     enabled-by-default: true
@@ -32,7 +32,7 @@ browser-scheduler:
     type: firefox
     maxTask: 1
     pageLoadStrategy: none
-    headless: false
+    headless: true
   jobParallelism: 1
   springComponentScanBasePackages: ""
   jobs:
