@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.kquiet</groupId>
   <artifactId>browser-scheduler</artifactId>
-  <version>2.0.4</version>
+  <version>2.0.5</version>
   <packaging>jar</packaging>
   <name>${project.groupId}:${project.artifactId}</name>
   <description>A scheduler of browser jobs supporting customized browser automation.</description>
@@ -13,12 +13,13 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.release>17</maven.compiler.release>
     
-    <auto-browser.version>2.0.4</auto-browser.version>
-    <selenium.version>4.8.0</selenium.version>
+    <auto-browser.version>2.0.5</auto-browser.version>
+    <selenium.version>4.8.1</selenium.version>
     <slf4j.version>2.0.6</slf4j.version>
     <logback.version>1.4.5</logback.version>
-    <fasterxml.jackson.version>2.14.2</fasterxml.jackson.version>
-    <spring.boot.version>3.0.2</spring.boot.version>
+    <spring.boot.version>3.0.3</spring.boot.version>
+    
+    <logstash-logback-encoder.version>7.2</logstash-logback-encoder.version>
     
     <junit.version>5.9.2</junit.version>
     
@@ -74,12 +75,6 @@
     </dependency>
 
     <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-databind</artifactId>
-      <version>${fasterxml.jackson.version}</version>
-    </dependency>
-
-    <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter</artifactId>
     </dependency>
@@ -102,6 +97,13 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-security</artifactId>
+    </dependency>
+    
+    <dependency>
+      <groupId>net.logstash.logback</groupId>
+      <artifactId>logstash-logback-encoder</artifactId>
+      <version>${logstash-logback-encoder.version}</version>
+      <scope>runtime</scope>
     </dependency>
 
     <dependency>
@@ -195,7 +197,7 @@
             </manifestEntries>
           </archive>
           <excludes>
-            <exclude>logback.xml</exclude>
+            <exclude>logback-spring.xml</exclude>
             <exclude>application.yml</exclude>
           </excludes>
         </configuration>
@@ -206,7 +208,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-javadoc-plugin</artifactId>
-        <version>3.4.1</version>
+        <version>3.5.0</version>
       </plugin>
       <plugin>
         <artifactId>maven-source-plugin</artifactId>
@@ -214,7 +216,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-shade-plugin</artifactId>
-        <version>3.4.0</version>
+        <version>3.4.1</version>
       </plugin>
       <plugin>
         <artifactId>maven-antrun-plugin</artifactId>
@@ -226,19 +228,23 @@
       </plugin>
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>3.0.0-M7</version>
+        <version>3.0.0-M9</version>
       </plugin>
       <plugin>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>3.1.0</version>
+        </plugin>
+      <plugin>
         <artifactId>maven-failsafe-plugin</artifactId>
-        <version>3.0.0-M7</version>
+        <version>3.0.0-M9</version>
       </plugin>
       <plugin>
         <artifactId>maven-site-plugin</artifactId>
-        <version>3.12.1</version>
+        <version>4.0.0-M5</version>
       </plugin>
       <plugin>
         <artifactId>maven-project-info-reports-plugin</artifactId>
-        <version>3.4.1</version>
+        <version>3.4.2</version>
       </plugin>
       <plugin>
         <artifactId>maven-gpg-plugin</artifactId>
@@ -247,7 +253,7 @@
       <plugin>
         <groupId>com.github.spotbugs</groupId>
         <artifactId>spotbugs-maven-plugin</artifactId>
-        <version>4.7.2.0</version>
+        <version>4.7.3.0</version>
       </plugin>
       <plugin>
         <groupId>org.sonatype.plugins</groupId>
@@ -297,7 +303,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-dependency-plugin</artifactId>
-        <version>3.2.0</version>
+        <version>3.5.0</version>
         <executions>
           <execution>
             <phase>package</phase>
@@ -319,7 +325,7 @@
       <plugin>
         <groupId>com.github.spotbugs</groupId>
         <artifactId>spotbugs-maven-plugin</artifactId>
-        <version>4.7.2.0</version>
+        <version>4.7.3.0</version>
         <configuration>
           <!-- Enables analysis which takes more memory but finds more bugs. If 
 						you run out of memory, changes the value of the effort element to 'Low'. -->
@@ -378,7 +384,7 @@
           </plugin>
           <plugin>
             <artifactId>maven-surefire-plugin</artifactId>
-            <version>3.0.0-M7</version>
+            <version>3.0.0-M9</version>
             <configuration>
               <systemPropertyVariables>
                 <webdriver_headless>yes</webdriver_headless>
@@ -427,7 +433,7 @@
         <plugins>
           <plugin>
             <artifactId>maven-surefire-plugin</artifactId>
-            <version>3.0.0-M7</version>
+            <version>3.0.0-M9</version>
             <configuration>
               <systemPropertyVariables>
                 <webdriver.chrome.driver>${test.webdriver.directory.chrome.windows}${file.separator}chromedriver.exe</webdriver.chrome.driver>
@@ -444,7 +450,7 @@
         <plugins>
           <plugin>
             <artifactId>maven-surefire-plugin</artifactId>
-            <version>3.0.0-M7</version>
+            <version>3.0.0-M9</version>
             <configuration>
               <systemPropertyVariables>
                 <webdriver.chrome.driver>${test.webdriver.directory.chrome.linux}${file.separator}chromedriver</webdriver.chrome.driver>
@@ -473,7 +479,7 @@
           </plugin>
           <plugin>
             <artifactId>maven-javadoc-plugin</artifactId>
-            <version>3.4.1</version>
+            <version>3.5.0</version>
             <executions>
               <execution>
                 <id>attach-javadocs</id>
@@ -541,6 +547,6 @@
     <connection>scm:git:https://github.com/kquiet/browser-scheduler.git</connection>
     <developerConnection>scm:git:https://github.com/kquiet/browser-scheduler.git</developerConnection>
     <url>https://github.com/kquiet/browser-scheduler/tree/main</url>
-    <tag>browser-scheduler-2.0.4</tag>
+    <tag>browser-scheduler-2.0.5</tag>
   </scm>
 </project>

@@ -14,7 +14,6 @@
 
 package org.kquiet.browserscheduler;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -25,15 +24,8 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.kquiet.browserscheduler.BeanConfiguration;
 import org.kquiet.browserscheduler.BrowserSchedulerConfig.JobConfig;
-import org.kquiet.browserscheduler.JobBase;
-import org.kquiet.browserscheduler.JobController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,18 +43,6 @@ class IntegrationTest {
   private static final Logger LOGGER = LoggerFactory.getLogger(IntegrationTest.class);
   @Autowired
   private JobController controller;
-
-  @BeforeAll
-  public static void setUpClass() {}
-
-  @AfterAll
-  public static void tearDownClass() {}
-
-  @BeforeEach
-  public void setUp() {}
-
-  @AfterEach
-  public void tearDown() {}
 
   @Test
   void customJobTest() {
@@ -82,11 +62,11 @@ class IntegrationTest {
     }
     controller.stop();
     boolean jobDone = temp;
-    assertAll(() -> assertTrue(jobDone),
-        () -> assertEquals(2, parameterValueList.size(), "Wrong parameter value size"),
-        () -> assertEquals("TestJob1,TestJob2",
-            String.join(",", parameterValueList.stream().sorted().collect(Collectors.toList())),
-            "Wrong parameter value sequence"));
+    assertTrue(jobDone);
+    assertEquals(2, parameterValueList.size(), "Wrong parameter value size");
+    assertEquals("TestJob1,TestJob2",
+        String.join(",", parameterValueList.stream().sorted().collect(Collectors.toList())),
+        "Wrong parameter value sequence");
   }
 
   static class TestJobBase extends JobBase {
