@@ -13,11 +13,11 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.release>17</maven.compiler.release>
     
-    <auto-browser.version>2.0.5</auto-browser.version>
-    <selenium.version>4.8.1</selenium.version>
-    <slf4j.version>2.0.6</slf4j.version>
-    <logback.version>1.4.5</logback.version>
-    <spring.boot.version>3.0.3</spring.boot.version>
+    <auto-browser.version>2.0.6</auto-browser.version>
+    <selenium.version>4.8.3</selenium.version>
+    <slf4j.version>2.0.7</slf4j.version>
+    <logback.version>1.4.6</logback.version>
+    <spring.boot.version>3.0.5</spring.boot.version>
     
     <logstash-logback-encoder.version>7.2</logstash-logback-encoder.version>
     
