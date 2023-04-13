@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.kquiet</groupId>
   <artifactId>browser-scheduler</artifactId>
-  <version>2.0.6</version>
+  <version>2.0.7</version>
   <packaging>jar</packaging>
   <name>${project.groupId}:${project.artifactId}</name>
   <description>A scheduler of browser jobs supporting customized browser automation.</description>
@@ -13,11 +13,11 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.release>17</maven.compiler.release>
     
-    <auto-browser.version>2.0.5</auto-browser.version>
-    <selenium.version>4.8.1</selenium.version>
-    <slf4j.version>2.0.6</slf4j.version>
-    <logback.version>1.4.5</logback.version>
-    <spring.boot.version>3.0.3</spring.boot.version>
+    <auto-browser.version>2.0.6</auto-browser.version>
+    <selenium.version>4.8.3</selenium.version>
+    <slf4j.version>2.0.7</slf4j.version>
+    <logback.version>1.4.6</logback.version>
+    <spring.boot.version>3.0.5</spring.boot.version>
     
     <logstash-logback-encoder.version>7.2</logstash-logback-encoder.version>
     
@@ -547,6 +547,6 @@
     <connection>scm:git:https://github.com/kquiet/browser-scheduler.git</connection>
     <developerConnection>scm:git:https://github.com/kquiet/browser-scheduler.git</developerConnection>
     <url>https://github.com/kquiet/browser-scheduler/tree/main</url>
-    <tag>browser-scheduler-2.0.6</tag>
+    <tag>browser-scheduler-2.0.7</tag>
   </scm>
 </project>
