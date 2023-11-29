@@ -16,7 +16,7 @@
     <auto-browser.version>2.0.6</auto-browser.version>
     <selenium.version>4.8.3</selenium.version>
     <slf4j.version>2.0.7</slf4j.version>
-    <logback.version>1.4.6</logback.version>
+    <logback.version>1.4.12</logback.version>
     <spring.boot.version>3.0.5</spring.boot.version>
     
     <logstash-logback-encoder.version>7.2</logstash-logback-encoder.version>
