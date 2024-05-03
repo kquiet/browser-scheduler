@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.kquiet</groupId>
   <artifactId>browser-scheduler</artifactId>
-  <version>2.0.7</version>
+  <version>2.0.8</version>
   <packaging>jar</packaging>
   <name>${project.groupId}:${project.artifactId}</name>
   <description>A scheduler of browser jobs supporting customized browser automation.</description>
@@ -13,15 +13,15 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.release>17</maven.compiler.release>
     
-    <auto-browser.version>2.0.6</auto-browser.version>
-    <selenium.version>4.8.3</selenium.version>
-    <slf4j.version>2.0.7</slf4j.version>
-    <logback.version>1.4.6</logback.version>
-    <spring.boot.version>3.0.5</spring.boot.version>
+    <auto-browser.version>2.0.7</auto-browser.version>
+    <selenium.version>4.20.0</selenium.version>
+    <slf4j.version>2.0.13</slf4j.version>
+    <logback.version>1.4.14</logback.version>
+    <spring.boot.version>3.2.5</spring.boot.version>
     
-    <logstash-logback-encoder.version>7.2</logstash-logback-encoder.version>
+    <logstash-logback-encoder.version>7.4</logstash-logback-encoder.version>
     
-    <junit.version>5.9.2</junit.version>
+    <junit.version>5.10.2</junit.version>
     
     <test.webdriver.directory.chrome.windows>${project.basedir}\third_party\webdriver\chromedriver\110.0.5481.77\win32</test.webdriver.directory.chrome.windows>
     <test.webdriver.directory.chrome.linux>${project.basedir}/third_party/webdriver/chromedriver/110.0.5481.77/linux64</test.webdriver.directory.chrome.linux>
@@ -150,7 +150,7 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>buildnumber-maven-plugin</artifactId>
-        <version>3.0.0</version>
+        <version>3.2.0</version>
         <executions>
           <execution>
             <phase>validate</phase>
@@ -173,7 +173,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.10.1</version>
+        <version>3.13.0</version>
         <configuration>
           <compilerArgs>
             <arg>-Xlint:deprecation,unchecked</arg>
@@ -182,7 +182,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-jar-plugin</artifactId>
-        <version>3.3.0</version>
+        <version>3.4.1</version>
         <configuration>
           <archive>
             <manifest>
@@ -204,19 +204,19 @@
       </plugin>
       <plugin>
         <artifactId>maven-resources-plugin</artifactId>
-        <version>3.3.0</version>
+        <version>3.3.1</version>
       </plugin>
       <plugin>
         <artifactId>maven-javadoc-plugin</artifactId>
-        <version>3.5.0</version>
+        <version>3.6.3</version>
       </plugin>
       <plugin>
         <artifactId>maven-source-plugin</artifactId>
-        <version>3.2.1</version>
+        <version>3.3.1</version>
       </plugin>
       <plugin>
         <artifactId>maven-shade-plugin</artifactId>
-        <version>3.4.1</version>
+        <version>3.5.3</version>
       </plugin>
       <plugin>
         <artifactId>maven-antrun-plugin</artifactId>
@@ -224,36 +224,36 @@
       </plugin>
       <plugin>
         <artifactId>maven-clean-plugin</artifactId>
-        <version>3.2.0</version>
+        <version>3.3.2</version>
       </plugin>
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>3.0.0-M9</version>
+        <version>3.2.5</version>
       </plugin>
       <plugin>
         <artifactId>maven-deploy-plugin</artifactId>
-        <version>3.1.0</version>
+        <version>3.1.2</version>
         </plugin>
       <plugin>
         <artifactId>maven-failsafe-plugin</artifactId>
-        <version>3.0.0-M9</version>
+        <version>3.2.5</version>
       </plugin>
       <plugin>
         <artifactId>maven-site-plugin</artifactId>
-        <version>4.0.0-M5</version>
+        <version>4.0.0-M13</version>
       </plugin>
       <plugin>
         <artifactId>maven-project-info-reports-plugin</artifactId>
-        <version>3.4.2</version>
+        <version>3.5.0</version>
       </plugin>
       <plugin>
         <artifactId>maven-gpg-plugin</artifactId>
-        <version>3.0.1</version>
+        <version>3.2.4</version>
       </plugin>
       <plugin>
         <groupId>com.github.spotbugs</groupId>
         <artifactId>spotbugs-maven-plugin</artifactId>
-        <version>4.7.3.0</version>
+        <version>4.8.4.0</version>
       </plugin>
       <plugin>
         <groupId>org.sonatype.plugins</groupId>
@@ -268,7 +268,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-release-plugin</artifactId>
-        <version>3.0.0-M7</version>
+        <version>3.0.1</version>
         <extensions>true</extensions>
         <configuration>
           <autoVersionSubmodules>true</autoVersionSubmodules>
@@ -280,7 +280,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-checkstyle-plugin</artifactId>
-        <version>3.2.0</version>
+        <version>3.3.1</version>
         <executions>
           <execution>
             <id>validate</id>
@@ -303,7 +303,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-dependency-plugin</artifactId>
-        <version>3.5.0</version>
+        <version>3.6.1</version>
         <executions>
           <execution>
             <phase>package</phase>
@@ -325,7 +325,7 @@
       <plugin>
         <groupId>com.github.spotbugs</groupId>
         <artifactId>spotbugs-maven-plugin</artifactId>
-        <version>4.7.3.0</version>
+        <version>4.8.4.0</version>
         <configuration>
           <!-- Enables analysis which takes more memory but finds more bugs. If 
 						you run out of memory, changes the value of the effort element to 'Low'. -->
@@ -355,7 +355,7 @@
         <plugins>
           <plugin>
             <artifactId>maven-resources-plugin</artifactId>
-            <version>3.3.0</version>
+            <version>3.3.1</version>
             <executions>
               <execution>
                 <id>copy-resources-target</id>
@@ -384,7 +384,7 @@
           </plugin>
           <plugin>
             <artifactId>maven-surefire-plugin</artifactId>
-            <version>3.0.0-M9</version>
+            <version>3.2.5</version>
             <configuration>
               <systemPropertyVariables>
                 <webdriver_headless>yes</webdriver_headless>
@@ -433,7 +433,7 @@
         <plugins>
           <plugin>
             <artifactId>maven-surefire-plugin</artifactId>
-            <version>3.0.0-M9</version>
+            <version>3.2.5</version>
             <configuration>
               <systemPropertyVariables>
                 <webdriver.chrome.driver>${test.webdriver.directory.chrome.windows}${file.separator}chromedriver.exe</webdriver.chrome.driver>
@@ -450,7 +450,7 @@
         <plugins>
           <plugin>
             <artifactId>maven-surefire-plugin</artifactId>
-            <version>3.0.0-M9</version>
+            <version>3.2.5</version>
             <configuration>
               <systemPropertyVariables>
                 <webdriver.chrome.driver>${test.webdriver.directory.chrome.linux}${file.separator}chromedriver</webdriver.chrome.driver>
@@ -467,7 +467,7 @@
         <plugins>
           <plugin>
             <artifactId>maven-source-plugin</artifactId>
-            <version>3.2.1</version>
+            <version>3.3.1</version>
             <executions>
               <execution>
                 <id>attach-sources</id>
@@ -479,7 +479,7 @@
           </plugin>
           <plugin>
             <artifactId>maven-javadoc-plugin</artifactId>
-            <version>3.5.0</version>
+            <version>3.6.3</version>
             <executions>
               <execution>
                 <id>attach-javadocs</id>
@@ -494,7 +494,7 @@
           </plugin>
           <plugin>
             <artifactId>maven-gpg-plugin</artifactId>
-            <version>3.0.1</version>
+            <version>3.2.4</version>
             <executions>
               <execution>
                 <id>sign-artifacts</id>
@@ -547,6 +547,6 @@
     <connection>scm:git:https://github.com/kquiet/browser-scheduler.git</connection>
     <developerConnection>scm:git:https://github.com/kquiet/browser-scheduler.git</developerConnection>
     <url>https://github.com/kquiet/browser-scheduler/tree/main</url>
-    <tag>browser-scheduler-2.0.7</tag>
+    <tag>browser-scheduler-2.0.8</tag>
   </scm>
 </project>
